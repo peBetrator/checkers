@@ -11,16 +11,21 @@
     "start": "npx nodemon --watch dist --exec 'yarn type-check & yarn lint' & node esbuild/dev"
   },
   "dependencies": {
+    "@react-three/cannon": "^6.2.0",
+    "@react-three/drei": "^9.4.2",
+    "@react-three/fiber": "^8.0.10",
     "dotenv": "^16.0.0",
     "esbuild": "^0.14.36",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "three": "^0.139.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.23",
     "@types/react": "^18.0.2",
     "@types/react-dom": "^18.0.0",
     "@types/serve-handler": "^6.1.1",
+    "@types/three": "^0.139.0",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "eslint": "^8.13.0",

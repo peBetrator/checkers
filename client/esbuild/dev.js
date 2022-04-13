@@ -20,6 +20,9 @@ esbuild
     define: clientEnv,
     outfile: 'dist/index.js',
     sourcemap: 'inline',
+    loader: {
+      '.png': 'file',
+    },
     watch: {
       onRebuild(error) {
         setTimeout(() => {
