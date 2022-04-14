@@ -1,36 +1,60 @@
-import { usePlane } from '@react-three/cannon';
-import React from 'react';
-import { DoubleSide } from 'three';
+import { useThree } from '@react-three/fiber';
+import React, { memo, useMemo } from 'react';
+import { Color, DoubleSide, MeshLambertMaterial, PlaneGeometry } from 'three';
 
-const SIZE = 8; // checkerboard size is 8x8
+import { CheckboardPropTypes } from './types';
 
-export default function Checkboard(): JSX.Element {
-  const colsRef = new Array(SIZE).fill(null);
-  const rowsRef = new Array(SIZE).fill(null);
+const meshColors = {
+  black: new MeshLambertMaterial({
+    color: new Color('black'),
+    side: DoubleSide,
+  }),
+  white: new MeshLambertMaterial({
+    color: new Color('white'),
+    side: DoubleSide,
+  }),
+};
 
-  usePlane(() => ({
-    position: [0, 0, 0],
-    rotation: [-Math.PI / 2, 0, 0], // make plane horizontal
-  }));
+function Checkboard({
+  selectedPiece,
+  select,
+}: CheckboardPropTypes): JSX.Element {
+  const geometry = useMemo(() => new PlaneGeometry(1, 1), []);
+  const meshes = [];
 
-  return (
-    <>
-      {colsRef.map((_, i) =>
-        rowsRef.map((_, j) => (
-          <mesh
-            key={`square_${i}_${j}`}
-            position={[i - 3, 0, j - 3]}
-            rotation={[-Math.PI / 2, 0, 0]}
-          >
-            <planeBufferGeometry attach="geometry" args={[1, 1]} />
-            <meshLambertMaterial
-              attach="material"
-              color={(i + j) % 2 === 0 ? 'white' : 'black'}
-              side={DoubleSide}
-            />
-          </mesh>
-        ))
-      )}
-    </>
-  );
+  const { scene } = useThree();
+
+  const handleClick = (row: number, col: number) => {
+    if (selectedPiece) {
+      const selectedObject = scene.children.find(
+        ({ name }) => name === selectedPiece
+      );
+
+      if (selectedObject) {
+        console.log(selectedObject);
+        selectedObject.position.set(row, 0, col);
+        select(null);
+      }
+    }
+  };
+
+  for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+      meshes.push(
+        <mesh
+          key={`square ${i} ${j}`}
+          name={`square ${i} ${j}`}
+          geometry={geometry}
+          rotation-x={-Math.PI / 2}
+          position={[i, 0, j]}
+          material={meshColors[(i + j) % 2 === 0 ? 'white' : 'black']}
+          receiveShadow
+          onClick={() => handleClick(i, j)}
+        />
+      );
+    }
+  }
+  return <group name="Checkboard">{meshes}</group>;
 }
+
+export default memo(Checkboard);
