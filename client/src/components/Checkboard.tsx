@@ -18,6 +18,7 @@ const meshColors = {
 function Checkboard({
   selectedPiece,
   select,
+  movePiece,
 }: CheckboardPropTypes): JSX.Element {
   const geometry = useMemo(() => new PlaneGeometry(1, 1), []);
   const meshes = [];
@@ -31,8 +32,8 @@ function Checkboard({
       );
 
       if (selectedObject) {
-        console.log(selectedObject);
-        selectedObject.position.set(row, 0, col);
+        // selectedObject.position.set(row, 0, col);
+        movePiece(row, col);
         select(null);
       }
     }
