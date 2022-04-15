@@ -72,6 +72,6 @@ exports.addPlayerToGame = ({ player, gameId }) => {
  */
 exports.move = ({ player, selectedPiece, destination }) => {
   const game = getGameForPlayer(player);
-  console.log({ game });
+
   moveChecker({ game, destination, selectedPiece });
 };

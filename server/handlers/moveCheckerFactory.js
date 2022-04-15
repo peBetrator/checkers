@@ -4,7 +4,6 @@ const sendGames = require('../helpers/sendGames');
 module.exports =
   ({ io, socket }) =>
   ({ selectedPiece, destination }) => {
-    console.log({ selectedPiece, destination });
     move({
       player: socket,
       selectedPiece,

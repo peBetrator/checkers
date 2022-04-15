@@ -41,7 +41,7 @@ export default function App(): React.ReactElement {
       const game = games.find(g => g.id === gameId);
 
       if (game) {
-        console.log('App game ', game.board);
+        console.log('App game ', game);
         setGame(game);
       }
     }
@@ -65,10 +65,10 @@ export default function App(): React.ReactElement {
   };
 
   const movePiece = (di: number, dj: number) => {
-    const [_, i = 0, j = 0] = selectedPiece?.split(' ') || [];
+    const [_, i = '', j = ''] = selectedPiece?.split(' ') || [];
 
     (socket as Socket).emit('move-piece', {
-      selectedPiece: { i, j },
+      selectedPiece: { i: parseInt(i, 10), j: parseInt(j, 10) },
       destination: { i: di, j: dj },
     });
   };
