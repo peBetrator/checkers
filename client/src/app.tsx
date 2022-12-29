@@ -41,18 +41,12 @@ export default function App(): React.ReactElement {
       const game = games.find(g => g.id === gameId);
 
       if (game) {
+        setShowMenu(false);
         console.log('App game ', game);
         setGame(game);
       }
     }
   }, [games, gameId]);
-
-  // useEffect(() => {
-  //   const randRow = Math.floor(Math.random() * 8);
-  //   const randCol = Math.floor(Math.random() * 8);
-
-  //   mocked_game[randRow][randCol] = 1;
-  // }, [selectedPiece]);
 
   const createGame = () => {
     (socket as Socket).emit('create-game', 'Test Game');

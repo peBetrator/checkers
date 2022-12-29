@@ -8,6 +8,7 @@ export default function Plane(): JSX.Element {
   const [ref] = usePlane(() => ({
     type: 'Static',
     args: [100, 100],
+    position: [0, 0, 0],
     rotation: [-Math.PI / 2, 0, 0], // make plane horizontal
   }));
 
